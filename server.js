@@ -1,20 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const app = express();
 
+// Allow cross-origin resource sharing
+app.use(cors());
+
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://localhost/my-database', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.set('strictQuery', false);
+mongoose.connect('mongodb+srv://wasya1212:wasya1212@cluster0.v4ayb.mongodb.net/delivery?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error(err));
 
-// Define Order model
-const orderSchema = new mongoose.Schema({
+// Define Delivery model
+const deliverySchema = new mongoose.Schema({
   coordinates: String,
   time: String,
   username: String,
 });
-const Order = mongoose.model('Order', orderSchema);
+const Delivery = mongoose.model('Delivery', deliverySchema);
 
 // Use bodyParser middleware
 app.use(bodyParser.json());
@@ -34,12 +40,12 @@ app.get('/hello', async (req, res) => {
 // Endpoint 2
 app.post('/order', async (req, res) => {
   const { coordinates, time, username } = req.body;
-  const newOrder = new Order({ coordinates, time, username });
-  await newOrder.save();
+  const newDelivery = new Delivery({ coordinates, time, username });
+  await newDelivery.save();
 
-  res.send(`Created new order for user ${newOrder.username} with coordinates ${newOrder.coordinates} at ${newOrder.time}`);
+  res.send(`Created new delivery for user ${newDelivery.username} with coordinates ${newDelivery.coordinates} at ${newDelivery.time}`);
 });
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+app.listen(5000, () => {
+  console.log('Server started on port 5000');
 });

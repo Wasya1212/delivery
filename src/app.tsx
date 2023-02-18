@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
+import Button from './send';
 
 mapboxgl.accessToken = "pk.eyJ1Ijoid2FzeWExMjEyIiwiYSI6ImNrNXRmdDJwYTB2ajQzZW11N21samJ2cnUifQ.7lV47ah1DXWnbVY7JhGg-g";
 
@@ -46,6 +47,7 @@ const MapboxMap = () => {
   return (
     <div className="App">
       <div ref={mapContainerRef} className="map-container" />
+      <Button></Button>
     </div>
   );
 };
